@@ -6,6 +6,7 @@
   <title>VINDEX BASE 100 — Liberdade Financeira Coletiva</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: Arial, Helvetica, sans-serif;
       background-color: #f4f6f9;
@@ -40,8 +41,21 @@
       padding: 14px 28px;
       border-radius: 6px;
       font-size: 1rem;
+      border: none;
+      cursor: pointer;
     }
     .btn:hover { background-color: #d8b56f; }
+    .btn-secundario {
+      display: inline-block;
+      margin-top: 12px;
+      background: transparent;
+      color: #f0cf85;
+      border: 1px solid #c5a059;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      text-decoration: none;
+    }
     .container {
       max-width: 900px;
       margin: 0 auto;
@@ -50,15 +64,20 @@
     h2 {
       color: #0b192c;
       font-size: 1.5rem;
-      margin-bottom: 18px;
+      margin-bottom: 14px;
       border-left: 4px solid #c5a059;
       padding-left: 12px;
+    }
+    .subtexto {
+      margin-bottom: 16px;
+      font-size: 0.94rem;
+      color: #475569;
     }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 18px;
-      margin-bottom: 36px;
+      margin-bottom: 38px;
     }
     .card {
       background: #ffffff;
@@ -71,24 +90,38 @@
       margin-bottom: 8px;
       font-size: 1.1rem;
     }
+    .nota-box {
+      background: #fffbeb;
+      border: 1px solid #f59e0b;
+      border-left: 4px solid #c5a059;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin-bottom: 36px;
+      font-size: 0.92rem;
+      color: #1e293b;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
       background: #ffffff;
       border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 36px;
+      margin-bottom: 38px;
       border: 1px solid #dce2ec;
     }
     th, td {
       padding: 12px 14px;
       text-align: left;
       border-bottom: 1px solid #e5e9f0;
-      font-size: 0.95rem;
+      font-size: 0.93rem;
     }
     th {
       background-color: #0b192c;
       color: #f0cf85;
+    }
+    .destaque-verde {
+      color: #065f46;
+      font-weight: bold;
     }
     .aviso {
       background-color: #eef1f6;
@@ -104,6 +137,82 @@
       font-size: 0.85rem;
       color: #64748b;
     }
+
+    /* Janela de entrada na Turma 1 */
+    .modal-fundo {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(11, 25, 44, 0.78);
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 999;
+    }
+    .modal-fundo.ativo { display: flex; }
+    .modal-caixa {
+      background: #ffffff;
+      color: #1a2234;
+      width: 100%;
+      max-width: 440px;
+      border-radius: 10px;
+      padding: 24px;
+      border-top: 4px solid #c5a059;
+      position: relative;
+    }
+    .modal-caixa h3 {
+      color: #0b192c;
+      font-size: 1.25rem;
+      margin-bottom: 8px;
+    }
+    .modal-caixa p {
+      font-size: 0.92rem;
+      color: #475569;
+      margin-bottom: 14px;
+    }
+    .fechar {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #475569;
+    }
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #0b192c;
+    }
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+    }
+    .check-linha {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      font-size: 0.84rem;
+      color: #334155;
+      margin-bottom: 16px;
+    }
+    .confirmacao {
+      display: none;
+      background: #ecfdf5;
+      border: 1px solid #10b981;
+      color: #065f46;
+      padding: 14px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-top: 12px;
+    }
   </style>
 </head>
 <body>
@@ -113,39 +222,78 @@
     <p>
       Do latim <strong>"Vindex"</strong> (Libertador): construindo a nossa liberdade financeira juntos,
       <strong>R$ 100 por mês</strong>. Meta de <strong>10.000 pessoas</strong> somando
-      <strong>R$ 5 milhões em 5 meses</strong> para viabilizar um fundo de investimento oficial.
+      <strong>R$ 5 milhões em 5 meses</strong> para lançar o nosso Fundo Oficial.
     </p>
-    <a class="btn" href="#comofunciona">Entrar na Turma 1 Gratuita</a>
+    <button class="btn" type="button" onclick="abrirModal()">Entrar na Turma 1 Gratuita</button>
+    <br />
+    <a class="btn-secundario" href="#comofunciona">Entender o Passo a Passo</a>
   </header>
 
   <main class="container" id="comofunciona">
     <h2>Como Funciona (100% Seguro)</h2>
     <div class="grid">
       <div class="card">
-        <h3>1. Dinheiro no Seu Nome</h3>
+        <h3>1. Meses 1 a 5: No Seu Nome</h3>
         <p>
-          Nos primeiros 5 meses, você não envia dinheiro para ninguém. Aplica R$ 100/mês onde já tem conta —
-          Caixinhas do Nubank, Cofrinhos do Mercado Pago, PicPay, Oliver ou CDB 100%+ CDI com FGC.
+          Você não transfere dinheiro para ninguém. Aplica R$ 100/mês na sua própria conta —
+          Caixinhas do Nubank, Cofrinhos do Mercado Pago, PicPay, Oliver ou CDB 100%+ CDI com garantia do FGC.
         </p>
       </div>
       <div class="card">
-        <h3>2. Placar Coletivo</h3>
+        <h3>2. Placar Coletivo (Meta R$ 5M)</h3>
         <p>
-          Você envia o comprovante do seu aporte (ocultando CPF, agência e conta por segurança e LGPD)
-          para somarmos o progresso rumo aos R$ 5 milhões.
+          Você envia o comprovante do seu aporte (ocultando CPF, agência e conta por segurança e LGPD).
+          No Mês 5, cada pessoa terá ~R$ 510 e o grupo todo soma mais de R$ 5 milhões.
         </p>
       </div>
       <div class="card">
-        <h3>3. Fundo Oficial no Mês 5</h3>
+        <h3>3. Lançamento do Fundo Oficial</h3>
         <p>
-          Com a meta atingida, buscamos estruturar o fundo com administradora fiduciária independente
-          (como Oliveira Trust ou Vórtx) e distribuição em corretoras. Você resgata sua caixinha e transfere via Pix.
+          Com R$ 5 milhões reunidos, buscamos estruturar o fundo com administradora autorizada pela CVM
+          (como Oliveira Trust ou Vórtx). Você resgata sua caixinha e transfere via Pix para o fundo.
         </p>
       </div>
     </div>
 
-    <h2>Escada da Liberdade (Simulação 100% CDI)</h2>
-    <p style="margin-bottom: 14px; font-size: 0.92rem; color: #475569;">
+    <h2>Por Que Não Deixar na Poupança?</h2>
+    <p class="subtexto">
+      A Poupança rende apenas 0,5% ao mês + TR (~0,62% a.m.), enquanto 100% do CDI (referência 13,65% a.a.)
+      rende cerca de <strong>0,91% líquido ao mês</strong> já descontando o Imposto de Renda. Veja a diferença
+      guardando os mesmos <strong>R$ 100 por mês</strong>:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Tempo Guardando</th>
+          <th>Na Poupança</th>
+          <th>No Vindex (100% CDI líquido)</th>
+          <th>Vantagem do Vindex</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>5 anos e 7 meses</strong><br>(Mês 67)</td>
+          <td>Saldo: ~R$ 8.270<br>Renda: ~R$ 51/mês</td>
+          <td>Saldo: <strong>~R$ 9.750</strong><br>Renda: <strong>~R$ 100/mês</strong></td>
+          <td class="destaque-verde">+R$ 1.480 de saldo<br>(Juros já pagam a parcela)</td>
+        </tr>
+        <tr>
+          <td><strong>9 anos e 5 meses</strong><br>(Mês 113)</td>
+          <td>Saldo: ~R$ 16.300<br>Renda: ~R$ 101/mês</td>
+          <td>Saldo: <strong>~R$ 22.029</strong><br>Renda: <strong>~R$ 200/mês</strong></td>
+          <td class="destaque-verde">+R$ 5.729 de saldo<br>(O dobro de renda mensal)</td>
+        </tr>
+        <tr>
+          <td><strong>17 anos e 5 meses</strong><br>(Mês 209 — R$ 20.900 investidos)</td>
+          <td>Saldo: ~R$ 66.200<br>Renda: ~R$ 410/mês</td>
+          <td>Saldo: <strong>~R$ 109.750</strong><br>Renda: <strong>~R$ 1.000/mês</strong></td>
+          <td class="destaque-verde">+R$ 43.550 a mais<br>no seu patrimônio</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Escada da Liberdade (Todos os Marcos)</h2>
+    <p class="subtexto">
       Simulação de referência com aporte de R$ 100/mês a 100% do CDI (13,65% a.a. hipotético e IR de 15%).
       Rentabilidade simulada não garante retorno futuro.
     </p>
@@ -153,35 +301,77 @@
       <thead>
         <tr>
           <th>Prazo</th>
+          <th>Quanto saiu do seu bolso</th>
           <th>Saldo Estimado</th>
-          <th>Renda Mensal Líquida</th>
+          <th>Lucro Líquido por Mês</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>Mês 5 (Marco do Fundo)</td>
+          <td><strong>Mês 5</strong> (Abertura do Fundo)</td>
+          <td>R$ 500</td>
           <td>~R$ 510/pessoa (R$ 5,1M+ grupo)</td>
-          <td>Início da estruturação</td>
+          <td>~R$ 4,60/mês (Marco coletivo atingido)</td>
         </tr>
         <tr>
-          <td>Mês 67 (5 anos e 7 meses)</td>
+          <td><strong>Mês 67</strong> (5 anos e 7 meses)</td>
+          <td>R$ 6.700</td>
           <td>~R$ 9.750</td>
-          <td>~R$ 100/mês</td>
+          <td><strong>~R$ 100/mês</strong> (empata com a parcela)</td>
         </tr>
         <tr>
-          <td>Mês 113 (9 anos e 5 meses)</td>
+          <td><strong>Mês 113</strong> (9 anos e 5 meses)</td>
+          <td>R$ 11.300</td>
           <td>~R$ 22.029</td>
-          <td>~R$ 200/mês</td>
+          <td><strong>~R$ 200/mês</strong> (o dobro da parcela)</td>
         </tr>
         <tr>
-          <td>Mês 166 (13 anos e 10 meses)</td>
+          <td><strong>Mês 166</strong> (13 anos e 10 meses)</td>
+          <td>R$ 16.600</td>
           <td>~R$ 54.900</td>
-          <td>~R$ 500/mês</td>
+          <td><strong>~R$ 500/mês</strong></td>
         </tr>
         <tr>
-          <td>Mês 209 (17 anos e 5 meses)</td>
+          <td><strong>Mês 209</strong> (17 anos e 5 meses)</td>
+          <td>R$ 20.900</td>
           <td>~R$ 109.750</td>
-          <td>~R$ 1.000/mês</td>
+          <td><strong>~R$ 1.000/mês</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="nota-box">
+      <strong>Posso parar de colocar R$ 100 após o Mês 67 e só sacar os ~R$ 100 de rendimento?</strong><br />
+      <strong>Sim.</strong> Não há obrigação de aporte mensal contínuo. No <strong>Mês 67</strong> (~R$ 9.750), você pode
+      parar de colocar dinheiro do bolso e sacar apenas os ~R$ 100 gerados pelos juros mantendo o saldo principal
+      (o saldo estabiliza em torno desse valor enquanto sacar o rendimento). Se quiser que o rendimento continue crescendo
+      até R$ 200, R$ 500 ou R$ 1.000/mês, basta manter os aportes de R$ 100/mês e deixar os juros compostos trabalharem.
+    </div>
+
+    <h2>Estratégia "Saca R$ 90 até Chegar a R$ 150" (A partir do Mês 67)</h2>
+    <p class="subtexto">
+      Quando o rendimento chegar a ~R$ 100/mês no <strong>Mês 67</strong> (~R$ 9.750), em vez de sacar tudo, você pode
+      retirar <strong>R$ 90/mês</strong> e deixar o restante trabalhando até o rendimento mensal alcançar <strong>R$ 150/mês</strong>
+      (saldo próximo de ~R$ 16.500 na simulação de referência):
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>O Que Você Faz Após o Mês 67</th>
+          <th>Saque Mensal</th>
+          <th>Tempo Estimado Até R$ 150/mês de Renda</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Para de pôr do bolso</strong> e saca R$ 90/mês (deixa ~R$ 10/mês de sobra inicial)</td>
+          <td>R$ 90/mês</td>
+          <td><strong>~17 a 18 anos no total</strong> (Mês ~200–220)</td>
+        </tr>
+        <tr>
+          <td><strong>Mantém R$ 100/mês do bolso</strong> e saca R$ 90/mês (+R$ 110/mês líquidos no saldo)</td>
+          <td>R$ 90/mês</td>
+          <td class="destaque-verde"><strong>~8 a 8,5 anos no total</strong> (Mês ~98–102)</td>
         </tr>
       </tbody>
     </table>
@@ -197,6 +387,61 @@
     VINDEX BASE 100 — Liberdade Financeira Coletiva
   </footer>
 
+  <!-- Janela de inscrição na Turma 1 -->
+  <div class="modal-fundo" id="modalTurma1" onclick="fecharFora(event)">
+    <div class="modal-caixa">
+      <button class="fechar" type="button" onclick="fecharModal()" aria-label="Fechar">&times;</button>
+      <h3>Turma 1 — Inscrição Gratuita</h3>
+      <p>
+        Seu dinheiro fica <strong>100% no seu nome</strong> (Caixinha, Cofrinho ou CDB).
+        Não há cobrança nem envio de Pix para terceiros.
+      </p>
+
+      <form id="formTurma1" onsubmit="enviarInscricao(event)">
+        <label for="nome">Como quer ser chamado (Apelido ou Nome)</label>
+        <input type="text" id="nome" name="nome" required placeholder="Ex: Participante 01" />
+
+        <label for="email">Seu e-mail para avisos da Turma 1</label>
+        <input type="email" id="email" name="email" required placeholder="voce@exemplo.com" />
+
+        <div class="check-linha">
+          <input type="checkbox" id="aceite" required />
+          <label for="aceite" style="font-weight: normal; margin: 0;">
+            Entendo que farei meus aportes de R$ 100/mês na minha própria conta e que o projeto é uma iniciativa gratuita de educação financeira.
+          </label>
+        </div>
+
+        <button class="btn" type="submit" style="width: 100%;">Confirmar Entrada na Turma 1</button>
+      </form>
+
+      <div class="confirmacao" id="msgConfirmacao"></div>
+    </div>
+  </div>
+
+  <script>
+    function abrirModal() {
+      document.getElementById("modalTurma1").classList.add("ativo");
+    }
+    function fecharModal() {
+      document.getElementById("modalTurma1").classList.remove("ativo");
+    }
+    function fecharFora(event) {
+      if (event.target.id === "modalTurma1") {
+        fecharModal();
+      }
+    }
+    function enviarInscricao(event) {
+      event.preventDefault();
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const box = document.getElementById("msgConfirmacao");
+
+      box.style.display = "block";
+      box.innerHTML =
+        "<strong>Inscrição registrada!</strong> Olá, <strong>" + nome + "</strong> (" + email + "). " +
+        "Comece guardando os seus primeiros R$ 100 na sua própria Caixinha ou CDB 100% CDI e aguarde o link oficial da comunidade.";
+    }
+  </script>
+
 </body>
 </html>
-
